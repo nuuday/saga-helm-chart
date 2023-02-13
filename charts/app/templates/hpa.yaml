@@ -6,7 +6,7 @@ metadata:
   labels:
     {{- include "nmp-chart.labels" . | nindent 4 }}
 spec:
-  scaleTargetRef:
+  scaleTargetRef: 
     apiVersion: apps/v1
     kind: Deployment
     name: {{ include "nmp-chart.fullname" . }}
