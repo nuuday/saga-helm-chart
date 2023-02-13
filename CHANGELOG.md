@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.2.0](https://github.com/nuuday/saga-helm-chart/compare/v1.1.0...v1.2.0) (2023-02-13)
+
+
+### Features
+
+* release chart ([d8fca1c](https://github.com/nuuday/saga-helm-chart/commit/d8fca1c613eae331de798aed8453719db81fdea9))
+
 ## [1.1.0](https://github.com/nuuday/saga-helm-chart/compare/v1.0.0...v1.1.0) (2023-02-13)
 
 
