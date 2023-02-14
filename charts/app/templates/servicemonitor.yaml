@@ -1,7 +1,7 @@
 apiVersion: monitoring.coreos.com/v1
 kind: ServiceMonitor
 metadata:
-  name: {{ include "nmp-chart.serviceMonitorName" . }}
+  name: {{ include "nmp-chart.fullName" . }}
 spec:
   selector:
     matchLabels:
