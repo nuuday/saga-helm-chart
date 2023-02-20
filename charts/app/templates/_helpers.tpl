@@ -73,8 +73,8 @@ app.kubernetes.io/managed-by: {{ .Release.Service }}
 Selector labels
 */}}
 {{- define "nmp-chart.selectorLabels" -}}
-app.kubernetes.io/name: {{ include "nmp-chart.fullName" . }}
-app.kubernetes.io/instance: {{ include "nmp-chart.fullName" . }}
+app.kubernetes.io/name: {{ include "nmp-chart.deploymentName" . }}
+app.kubernetes.io/instance: {{ include "nmp-chart.deploymentName" . }}
 aadpodidbinding: {{ .Values.aadpodidbinding }}
 {{- end }}
 
