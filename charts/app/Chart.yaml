@@ -2,5 +2,5 @@ apiVersion: v2
 name: app
 description: A Helm chart for Kubernetes for running an application
 type: application
-version: 2.0.2
+version: 2.0.3
 #appVersion: "1.3.0"
