@@ -2,7 +2,7 @@
 Expand the name of the service.
 */}}
 {{- define "nmp-chart.serviceName" -}}
-{{- default .Values.serviceName .Values.serviceNameNameOverride | trunc 63 | trimSuffix "-" }}
+{{- default .Values.serviceName .Values.serviceNameOverride | trunc 63 | trimSuffix "-" }}
 {{- end }}
 
 {{/*
@@ -75,6 +75,8 @@ Selector labels
 {{- define "nmp-chart.selectorLabels" -}}
 app.kubernetes.io/name: {{ include "nmp-chart.deploymentName" . }}
 app.kubernetes.io/instance: {{ include "nmp-chart.deploymentName" . }}
+{{- if .Values.aadpodidbinding }}
 aadpodidbinding: {{ .Values.aadpodidbinding }}
+{{- end }}
 {{- end }}
 
