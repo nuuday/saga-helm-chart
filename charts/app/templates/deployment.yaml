@@ -63,10 +63,12 @@ spec:
             httpGet:
               path: {{ .Values.livenessProbe.path }}
               port: 8080
+              initialDelaySeconds: {{ .Values.livenessProbe.initialDelaySeconds }}
           readinessProbe:
             httpGet:
               path: {{ .Values.readinessProbe.path }}
               port: 8080
+              initialDelaySeconds: {{ .Values.livenessProbe.initialDelaySeconds }}
           env: 
             {{- range $key, $value := .Values.env}}
             - name: {{ $key }}
