@@ -1,5 +1,4 @@
 {{- $fullName := include "nmp-chart.deploymentName" $ -}}
-{{- $svcPort := $.Values.service.port -}}
 {{- range .Values.ingress.ingresses -}}
 {{- $ingressClassName := coalesce .className $.Values.ingress.className -}}
 {{- $dnsSuffix := coalesce .dnsSuffix $.Values.ingress.dnsSuffix -}}
@@ -54,10 +53,10 @@ spec:
               service:
                 name: {{ $fullName }}
                 port:
-                  number: {{ $svcPort }}
+                  number: {{ $.Values.service.port }}
               {{- else }}
               serviceName: {{ $fullName }}
-              servicePort: {{ $svcPort }}
+              servicePort: {{ $.Values.service.port }}
               {{- end }}
           {{- end }}
     {{- end }}
