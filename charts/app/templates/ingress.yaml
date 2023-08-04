@@ -2,9 +2,10 @@
 {{- range .Values.ingress.ingresses -}}
 {{- $ingressClassName := coalesce .className $.Values.ingress.className -}}
 {{- $dnsSuffix := coalesce .dnsSuffix $.Values.ingress.dnsSuffix -}}
+{{- $annotations := (merge (.annotations | default dict) ($.Values.ingress.annotations | default dict)) -}}
 {{- if and $ingressClassName (not (semverCompare ">=1.18-0" $.Capabilities.KubeVersion.GitVersion)) }}
-  {{- if not (hasKey .annotations "kubernetes.io/ingress.class") }}
-  {{- $_ := set .annotations "kubernetes.io/ingress.class" $ingressClassName}}
+  {{- if not (hasKey $annotations "kubernetes.io/ingress.class") }}
+  {{- $_ := set $annotations "kubernetes.io/ingress.class" $ingressClassName}}
   {{- end }}
 {{- end }}
 ---
@@ -23,7 +24,7 @@ metadata:
   {{- end }}
   labels:
     {{- include "nmp-chart.labels" $ | nindent 4 }}
-  {{- with ( merge (.annotations | default dict) $.Values.ingress.annotations ) }}
+  {{- with $annotations }}
   annotations:
     {{- toYaml . | nindent 4 }}
   {{- end }}
