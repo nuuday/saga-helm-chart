@@ -17,7 +17,10 @@ apiVersion: extensions/v1beta1
 {{- end }}
 kind: Ingress
 metadata:
-  name: {{ $fullName }}-{{ .name }}
+  name: {{ $fullName -}}
+  {{- if .name -}}
+    -{{ .name }}
+  {{- end }}
   labels:
     {{- include "nmp-chart.labels" $ | nindent 4 }}
   {{- with ( merge (.annotations | default dict) $.Values.ingress.annotations ) }}
