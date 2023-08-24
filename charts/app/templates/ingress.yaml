@@ -38,13 +38,16 @@ spec:
     - hosts:
         {{- range $host:=.hosts }}
         - {{ $host }}.{{ $.Values.ingress.tenantName }}.{{ $dnsSuffix }}
+        {{- end -}}
+        {{- range $exactHost:=.exactHosts }}
+        - {{ $exactHost }}
         {{- end }}
       secretName: {{ .secretName }}
     {{- end }}
   {{- end }}
   rules:
     {{- range .hosts }}
-    - host: {{ .host }}.{{ $.Values.ingress.tenantName }}.{{ $dnsSuffix }}
+    - host: {{ coalesce .exactHost (printf "%s.%s.%s" .host $.Values.ingress.tenantName $dnsSuffix) }}
       http:
         paths:
           {{- range .paths }}
