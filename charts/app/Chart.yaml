@@ -3,3 +3,8 @@ name: app
 description: A Helm chart for Kubernetes for running an application
 type: application
 version: 3.0.0
+
+metadata:
+  annotations:
+    application_service: saga
+    spoc: Niclas Schumacher nsch@nuuday.dk
