@@ -4,6 +4,8 @@ metadata:
   name: {{ include "nmp-chart.deploymentName" . }}
   labels:
     {{- include "nmp-chart.labels" . | nindent 4 }}
+  annotations: 
+    {{- include "nmp-chart.annotations" $ | nindent 4 }}
 spec:
   type: {{ .Values.service.type }}
   ports:

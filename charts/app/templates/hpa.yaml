@@ -5,6 +5,8 @@ metadata:
   name: {{ include "nmp-chart.fullName" . }}
   labels:
     {{- include "nmp-chart.labels" . | nindent 4 }}
+  annotations:
+    {{- include "nmp-chart.annotations" . | nindent 4 }}
 spec:
   scaleTargetRef:
     apiVersion: apps/v1

@@ -2,6 +2,8 @@ apiVersion: monitoring.coreos.com/v1
 kind: ServiceMonitor
 metadata:
   name: {{ include "nmp-chart.fullName" . }}
+  annotations:
+  {{- include "nmp-chart.annotations" . | nindent 4 }}
 spec:
   selector:
     matchLabels:

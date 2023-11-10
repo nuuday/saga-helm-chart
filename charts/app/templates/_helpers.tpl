@@ -80,3 +80,9 @@ aadpodidbinding: {{ .Values.aadpodidbinding }}
 {{- end }}
 {{- end }}
 
+{{/*applicationService and spoc annotations
+*/}}
+{{- define "nmp-chart.annotations" -}}
+spoc: "Niclas Schumacher nsch@nuuday.dk"
+application_service: {{ printf "saga-%s" .Values.environmentName | trunc 63 | trimSuffix "-" }}
+{{- end }}
