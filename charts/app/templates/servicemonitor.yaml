@@ -3,13 +3,11 @@ kind: ServiceMonitor
 metadata:
   name: {{ include "nmp-chart.fullName" . }}
   annotations:
-  {{- with  $.Values.annotations }}
-    {{- toYaml . | nindent 4 }}
-  {{- end }}
+  {{- include "nmp-chart.annotations" . | nindent 4 }}
 spec:
   selector:
     matchLabels:
       {{- include "nmp-chart.selectorLabels" . | nindent 6 }}
   endpoints:
-  - port: metrics
-    path: /metrics
+    - port: metrics
+      path: /metrics

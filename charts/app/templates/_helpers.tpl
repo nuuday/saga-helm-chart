@@ -5,6 +5,10 @@ Expand the name of the service.
 {{- default .Values.serviceName .Values.serviceNameOverride | trunc 63 | trimSuffix "-" }}
 {{- end }}
 
+{{- define "nmp-chart.environmentName" -}}
+{{- default .Values.environmentName | trunc 63 | trimSuffix "-" -}}
+{{- end -}}
+
 {{/*
 Expand the deployment name of the chart.
 */}}
@@ -80,3 +84,9 @@ aadpodidbinding: {{ .Values.aadpodidbinding }}
 {{- end }}
 {{- end }}
 
+{{/*applicationService and spoc annotations
+*/}}
+{{- define "nmp-chart.annotations" -}}
+spoc: "Niclas Schumacher nsch@nuuday.dk"
+application_service: {{ printf "saga-%s" .Values.environmentName | trunc 63 | trimSuffix "-" }}
+{{- end }}
