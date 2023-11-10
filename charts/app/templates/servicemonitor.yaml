@@ -9,5 +9,5 @@ spec:
     matchLabels:
       {{- include "nmp-chart.selectorLabels" . | nindent 6 }}
   endpoints:
-    - port: metrics
-      path: /metrics
+  - port: metrics
+    path: /metrics
