@@ -24,8 +24,11 @@ metadata:
   {{- end }}
   labels:
     {{- include "nmp-chart.labels" $ | nindent 4 }}
-  {{- with $annotations }}
   annotations:
+  {{- with  $.Values.annotations }}
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+  {{- with $annotations }}
     {{- toYaml . | nindent 4 }}
   {{- end }}
 spec:
