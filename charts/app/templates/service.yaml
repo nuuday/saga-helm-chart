@@ -13,8 +13,8 @@ spec:
       targetPort: http
       protocol: TCP
       name: http
-    {{- if .Values.prometheus }}
-    - port: {{ .Values.prometheus.port }}
+    {{- with .Values.prometheus }}
+    - port: {{ .port }}
       targetPort: metrics
       protocol: TCP
       name: metrics
