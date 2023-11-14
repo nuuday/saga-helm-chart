@@ -13,9 +13,11 @@ spec:
       targetPort: http
       protocol: TCP
       name: http
+    {{ if .Values.prometheus -}}
     - port: {{ .Values.prometheus.port }}
       targetPort: metrics
       protocol: TCP
       name: metrics
+    {{- end }}
   selector:
     {{- include "nmp-chart.selectorLabels" . | nindent 4 }}
