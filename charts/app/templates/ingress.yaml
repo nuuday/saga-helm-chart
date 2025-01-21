@@ -38,14 +38,14 @@ spec:
     {{- range .tls }}
     - hosts:
         {{- range $host:=.hosts }}
-        - {{ $host }}.{{ $.Values.ingress.tenantName }}.{{ $dnsSuffix }}
+        - {{ $host }}{{ if $.Values.ingress.tenantName }}.{{ $.Values.ingress.tenantName }}{{ end }}.{{ $dnsSuffix }}
         {{- end }}
       secretName: {{ .secretName }}
     {{- end }}
   {{- end }}
   rules:
     {{- range .hosts }}
-    - host: {{ .host }}.{{ $.Values.ingress.tenantName }}.{{ $dnsSuffix }}
+    - host: {{ .host }}{{ if $.Values.ingress.tenantName }}.{{ $.Values.ingress.tenantName }}{{ end }}.{{ $dnsSuffix }}
       http:
         paths:
           {{- range .paths }}
