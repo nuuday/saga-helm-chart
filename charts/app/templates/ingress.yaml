@@ -17,6 +17,8 @@ apiVersion: networking.k8s.io/v1beta1
 apiVersion: extensions/v1beta1
 {{- end }}
 kind: Ingress
+controller:
+    allowSnippetAnnotations: true
 metadata:
   name: {{ $fullName -}}
   {{- if .name -}}
