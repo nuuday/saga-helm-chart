@@ -39,6 +39,9 @@ spec:
     - hosts:
         {{- range $host:=.hosts }}
         - {{ $host }}{{ if $.Values.ingress.tenantName }}.{{ $.Values.ingress.tenantName }}{{ end }}.{{ $dnsSuffix }}
+        {{- if $.Values.featureDeployment.enabled }}
+        - {{ $host }}-pr-{{ $.Values.featureDeployment.prNumber }}{{ if $.Values.ingress.tenantName }}.{{ $.Values.ingress.tenantName }}{{ end }}.{{ $dnsSuffix }}
+        {{- end }}
         {{- end }}
       secretName: {{ .secretName }}
     {{- end }}
@@ -64,5 +67,26 @@ spec:
               servicePort: {{ $.Values.service.port }}
               {{- end }}
           {{- end }}
+    {{- if $.Values.featureDeployment.enabled }}
+    - host: {{ .host }}-pr-{{ $.Values.featureDeployment.prNumber }}{{ if $.Values.ingress.tenantName }}.{{ $.Values.ingress.tenantName }}{{ end }}.{{ $dnsSuffix }}
+      http:
+        paths:
+          {{- range .paths }}
+          - path: {{ .path }}
+            {{- if and .pathType (semverCompare ">=1.18-0" $.Capabilities.KubeVersion.GitVersion) }}
+            pathType: {{ .pathType }}
+            {{- end }}
+            backend:
+              {{- if semverCompare ">=1.19-0" $.Capabilities.KubeVersion.GitVersion }}
+              service:
+                name: {{ $fullName }}-pr-{{ $.Values.featureDeployment.prNumber }}
+                port:
+                  number: {{ $.Values.service.port }}
+              {{- else }}
+              serviceName: {{ $fullName }}-pr-{{ $.Values.featureDeployment.prNumber }}
+              servicePort: {{ $.Values.service.port }}
+              {{- end }}
+          {{- end }}
+    {{- end }}
     {{- end }}
 {{- end }}
