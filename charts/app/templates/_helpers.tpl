@@ -9,11 +9,14 @@ Expand the name of the service.
 Expand the deployment name of the chart.
 */}}
 {{- define "nmp-chart.deploymentName" -}}
-{{- if .Values.deploymentNameOverride }}
+{{- if index .Values "deployment-name" }}
+{{- index .Values "deployment-name" | trunc 63 | trimSuffix "-" }}
+{{- else if .Values.deploymentNameOverride }}
 {{- .Values.deploymentNameOverride | trunc 63 | trimSuffix "-" }}
-{{- end }}
+{{- else }}
 {{- $name := default (include "nmp-chart.serviceName" .) }}
 {{- printf "saga-%s" $name | trunc 63 | trimSuffix "-" }}
+{{- end }}
 {{- end }}
 
 {{/*
@@ -40,11 +43,7 @@ If release name contains chart name it will be used as a full name.
 {{- .Values.fullNameOverride | trunc 63 | trimSuffix "-" }}
 {{- else }}
 {{- $deploymentName := default (include "nmp-chart.deploymentName" .) }}
-{{- if .Values.featureDeployment }}
-{{- printf "%s-pr-%s-%s" $deploymentName .Values.prNumber .Values.environmentName | trunc 63 | trimSuffix "-" }}
-{{- else }}
 {{- printf "%s-%s" $deploymentName .Values.environmentName | trunc 63 | trimSuffix "-" }}
-{{- end }}
 {{- end }}
 {{- end }}
 
