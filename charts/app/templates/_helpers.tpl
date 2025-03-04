@@ -40,7 +40,11 @@ If release name contains chart name it will be used as a full name.
 {{- .Values.fullNameOverride | trunc 63 | trimSuffix "-" }}
 {{- else }}
 {{- $deploymentName := default (include "nmp-chart.deploymentName" .) }}
+{{- if .Values.featureDeployment }}
+{{- printf "%s-pr-%s-%s" $deploymentName .Values.prNumber .Values.environmentName | trunc 63 | trimSuffix "-" }}
+{{- else }}
 {{- printf "%s-%s" $deploymentName .Values.environmentName | trunc 63 | trimSuffix "-" }}
+{{- end }}
 {{- end }}
 {{- end }}
 
