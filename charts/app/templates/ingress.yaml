@@ -1,5 +1,5 @@
 {{- $fullName := include "nmp-chart.deploymentName" $ -}}
-{{- $isFeatureDeployment := contains "-pr-" $fullName -}}
+{{- $isFeatureDeployment := contains "pr-" $fullName -}}
 {{- range .Values.ingress.ingresses -}}
 {{- $ingressClassName := coalesce .className $.Values.ingress.className -}}
 {{- $dnsSuffix := coalesce .dnsSuffix $.Values.ingress.dnsSuffix -}}
