@@ -14,8 +14,7 @@ Expand the deployment name of the chart.
 {{- else if .Values.deploymentNameOverride }}
 {{- .Values.deploymentNameOverride | trunc 63 | trimSuffix "-" }}
 {{- else }}
-{{- $name := default (include "nmp-chart.serviceName" .) }}
-{{- printf "saga-%s" $name | trunc 63 | trimSuffix "-" }}
+{{- printf "%s" .Release.Name | trunc 63 | trimSuffix "-" }}
 {{- end }}
 {{- end }}
 
