@@ -1,4 +1,5 @@
 {{- $fullName := include "nmp-chart.deploymentName" $ -}}
+{{- $isFeatureDeployment := contains "-pr-" $fullName -}}
 {{- range .Values.ingress.ingresses -}}
 {{- $ingressClassName := coalesce .className $.Values.ingress.className -}}
 {{- $dnsSuffix := coalesce .dnsSuffix $.Values.ingress.dnsSuffix -}}
@@ -38,17 +39,22 @@ spec:
     {{- range .tls }}
     - hosts:
         {{- range $host:=.hosts }}
-        - {{ $host }}{{ if $.Values.ingress.tenantName }}.{{ $.Values.ingress.tenantName }}{{ end }}.{{ $dnsSuffix }}
-        {{- if $.Values.featureDeployment.enabled }}
-        - {{ $host }}-pr-{{ $.Values.featureDeployment.prNumber }}{{ if $.Values.ingress.tenantName }}.{{ $.Values.ingress.tenantName }}{{ end }}.{{ $dnsSuffix }}
-        {{- end }}
-        {{- end }}
+          {{- if $isFeatureDeployment }}
+          - {{ $host }}-{{ $fullName }}{{ if $.Values.ingress.tenantName }}.{{ $.Values.ingress.tenantName }}{{ end }}.{{ $dnsSuffix }}
+          {{- else }}
+          - {{ $host }}{{ if $.Values.ingress.tenantName }}.{{ $.Values.ingress.tenantName }}{{ end }}.{{ $dnsSuffix }}
+          {{- end }}
+          {{- end }}
       secretName: {{ .secretName }}
     {{- end }}
   {{- end }}
   rules:
     {{- range .hosts }}
+    {{- if $isFeatureDeployment }}
+    - host: {{ .host }}-{{ $fullName }}{{ if $.Values.ingress.tenantName }}.{{ $.Values.ingress.tenantName }}{{ end }}.{{ $dnsSuffix }}
+    {{- else }}
     - host: {{ .host }}{{ if $.Values.ingress.tenantName }}.{{ $.Values.ingress.tenantName }}{{ end }}.{{ $dnsSuffix }}
+    {{- end }}
       http:
         paths:
           {{- range .paths }}
@@ -67,26 +73,5 @@ spec:
               servicePort: {{ $.Values.service.port }}
               {{- end }}
           {{- end }}
-    {{- if $.Values.featureDeployment.enabled }}
-    - host: {{ .host }}-pr-{{ $.Values.featureDeployment.prNumber }}{{ if $.Values.ingress.tenantName }}.{{ $.Values.ingress.tenantName }}{{ end }}.{{ $dnsSuffix }}
-      http:
-        paths:
-          {{- range .paths }}
-          - path: {{ .path }}
-            {{- if and .pathType (semverCompare ">=1.18-0" $.Capabilities.KubeVersion.GitVersion) }}
-            pathType: {{ .pathType }}
-            {{- end }}
-            backend:
-              {{- if semverCompare ">=1.19-0" $.Capabilities.KubeVersion.GitVersion }}
-              service:
-                name: {{ $fullName }}-pr-{{ $.Values.featureDeployment.prNumber }}
-                port:
-                  number: {{ $.Values.service.port }}
-              {{- else }}
-              serviceName: {{ $fullName }}-pr-{{ $.Values.featureDeployment.prNumber }}
-              servicePort: {{ $.Values.service.port }}
-              {{- end }}
-          {{- end }}
-    {{- end }}
     {{- end }}
 {{- end }}
