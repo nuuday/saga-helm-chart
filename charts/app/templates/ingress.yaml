@@ -40,7 +40,7 @@ spec:
     - hosts:
         {{- range $host:=.hosts }}
           {{- if $isFeatureDeployment }}
-          - {{ $host }}-{{ $fullName }}{{ if $.Values.ingress.tenantName }}.{{ $.Values.ingress.tenantName }}{{ end }}.{{ $dnsSuffix }}
+          - {{ $host }}-{{ $.Values.featureDeployment.prNumber }}{{ if $.Values.ingress.tenantName }}.{{ $.Values.ingress.tenantName }}{{ end }}.{{ $dnsSuffix }}
           {{- else }}
           - {{ $host }}{{ if $.Values.ingress.tenantName }}.{{ $.Values.ingress.tenantName }}{{ end }}.{{ $dnsSuffix }}
           {{- end }}
@@ -51,7 +51,7 @@ spec:
   rules:
     {{- range .hosts }}
     {{- if $isFeatureDeployment }}
-    - host: {{ .host }}-{{ $fullName }}{{ if $.Values.ingress.tenantName }}.{{ $.Values.ingress.tenantName }}{{ end }}.{{ $dnsSuffix }}
+    - host: {{ .host }}-{{ $.Values.featureDeployment.prNumber }}{{ if $.Values.ingress.tenantName }}.{{ $.Values.ingress.tenantName }}{{ end }}.{{ $dnsSuffix }}
     {{- else }}
     - host: {{ .host }}{{ if $.Values.ingress.tenantName }}.{{ $.Values.ingress.tenantName }}{{ end }}.{{ $dnsSuffix }}
     {{- end }}
