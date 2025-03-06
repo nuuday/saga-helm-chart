@@ -19,7 +19,7 @@ apiVersion: extensions/v1beta1
 {{- end }}
 kind: Ingress
 metadata:
-  name: {{ $fullName }}-{{ if $isFeatureDeployment }}pr-{{ $.Values.featureDeployment.prNumber }}{{ end }}
+  name: {{ $fullName -}}{{ if $isFeatureDeployment }}-pr-{{ $.Values.featureDeployment.prNumber }}{{ end }}
   {{- if .name -}}
     -{{ .name }}
   {{- end }}
