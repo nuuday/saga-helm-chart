@@ -2,6 +2,15 @@ apiVersion: v1
 entries:
   app:
   - apiVersion: v2
+    created: "2025-03-06T12:11:21.944383475Z"
+    description: A Helm chart for Kubernetes for running an application
+    digest: 64156d7ae8108f6c139ae63d540e1ba7f92d2957492227a38a71e7beefa4f523
+    name: app
+    type: application
+    urls:
+    - https://github.com/nuuday/saga-helm-chart/releases/download/app-3.4.7/app-3.4.7.tgz
+    version: 3.4.7
+  - apiVersion: v2
     created: "2025-03-05T10:03:32.360262514Z"
     description: A Helm chart for Kubernetes for running an application
     digest: 8fa7c37e8b94e3ed20489ea69c666b8fdc2f9a7a101e75e7781cc8da423bd849
@@ -219,4 +228,4 @@ entries:
     urls:
     - https://github.com/nuuday/saga-helm-chart/releases/download/app-1.2.0/app-1.2.0.tgz
     version: 1.2.0
-generated: "2025-03-05T10:03:32.361006992Z"
+generated: "2025-03-06T12:11:21.944565376Z"
