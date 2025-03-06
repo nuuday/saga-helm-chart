@@ -60,6 +60,17 @@ Create chart name and version as used by the chart label.
 {{- end }}
 
 {{/*
+Create service account name.
+*/}}
+{{- define "nmp-chart.serviceAccountName" -}}
+{{- if .Values.serviceAccount.create -}}
+    {{ default (include "nmp-chart.fullName" .) .Values.serviceAccount.name }}
+{{- else -}}
+    {{ default "default" .Values.serviceAccount.name }}
+{{- end -}}
+{{- end -}}
+
+{{/*
 Common labels
 */}}
 {{- define "nmp-chart.labels" -}}
