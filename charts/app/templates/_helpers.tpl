@@ -64,7 +64,7 @@ Create service account name.
 */}}
 {{- define "nmp-chart.serviceAccountName" -}}
 {{- if .Values.serviceAccount.create -}}
-    {{ default (include "nmp-chart.fullName" .) .Values.serviceAccount.name }}
+    {{ include "nmp-chart.fullName" . }}
 {{- else -}}
     {{ default "default" .Values.serviceAccount.name }}
 {{- end -}}
