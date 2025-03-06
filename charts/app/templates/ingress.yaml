@@ -65,7 +65,7 @@ spec:
             backend:
               {{- if semverCompare ">=1.19-0" $.Capabilities.KubeVersion.GitVersion }}
               service:
-                name: {{ $fullName }}
+                name: {{ if $isFeatureDeployment }}{{ $fullName }}-pr-{{ $.Values.featureDeployment.prNumber }}{{ else }}{{ $fullName }}{{ end }}
                 port:
                   number: {{ $.Values.service.port }}
               {{- else }}
