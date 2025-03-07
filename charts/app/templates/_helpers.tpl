@@ -9,12 +9,18 @@ Expand the name of the service.
 Expand the deployment name of the chart.
 */}}
 {{- define "nmp-chart.deploymentName" -}}
+{{- $name := "" }}
 {{- if index .Values "deployment-name" }}
-{{- index .Values "deployment-name" | trunc 63 | trimSuffix "-" }}
+{{- $name = index .Values "deployment-name" }}
 {{- else if .Values.deploymentNameOverride }}
-{{- .Values.deploymentNameOverride | trunc 63 | trimSuffix "-" }}
+{{- $name = .Values.deploymentNameOverride }}
 {{- else }}
-{{- printf "%s" .Release.Name | trunc 63 | trimSuffix "-" }}
+{{- $name = .Release.Name }}
+{{- end }}
+{{- if and .Values.prNumber (ne .Values.prNumber "") }}
+{{- printf "%s-pr-%s" $name .Values.prNumber | trunc 63 | trimSuffix "-" }}
+{{- else }}
+{{- printf "%s" $name | trunc 63 | trimSuffix "-" }}
 {{- end }}
 {{- end }}
 
