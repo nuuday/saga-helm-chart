@@ -17,8 +17,8 @@ Expand the deployment name of the chart.
 {{- else }}
 {{- $name = .Release.Name }}
 {{- end }}
-{{- if and .Values.prNumber (ne .Values.prNumber "") }}
-{{- printf "%s-pr-%s" $name .Values.prNumber | trunc 63 | trimSuffix "-" }}
+{{- if and .Values.featureDeployment.prNumber (ne .Values.featureDeployment.prNumber "") }}
+{{- printf "%s-pr-%s" $name .Values.featureDeployment.prNumber | trunc 63 | trimSuffix "-" }}
 {{- else }}
 {{- printf "%s" $name | trunc 63 | trimSuffix "-" }}
 {{- end }}
