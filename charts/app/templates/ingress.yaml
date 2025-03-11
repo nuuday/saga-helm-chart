@@ -41,7 +41,7 @@ spec:
         {{- range $host:=.hosts }}
         - {{ $host }}{{ if $isFeatureDeployment }}-pr-{{ $.Values.featureDeployment.prNumber }}{{ end }}{{ if $.Values.ingress.tenantName }}.{{ $.Values.ingress.tenantName }}{{ end }}.{{ $dnsSuffix }}
         {{- end }}
-      secretName: {{ .secretName }}
+      secretName: {{ .secretName }}{{ if $isFeatureDeployment }}-pr-{{ $.Values.featureDeployment.prNumber }}{{ end }}
     {{- end }}
   {{- end }}
   rules:
