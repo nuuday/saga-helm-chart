@@ -39,14 +39,14 @@ spec:
     {{- range .tls }}
     - hosts:
         {{- range $host:=.hosts }}
-        - {{ $host }}{{ if $isFeatureDeployment }}-pr-{{ $.Values.featureDeployment.prNumber }}{{ end }}{{ if $.Values.ingress.tenantName }}.{{ $.Values.ingress.tenantName }}{{ end }}.{{ $dnsSuffix }}
+        - {{ if $isFeatureDeployment }}pr-{{ $.Values.featureDeployment.prNumber }}.{{ end }}{{ $host }}{{ if $.Values.ingress.tenantName }}.{{ $.Values.ingress.tenantName }}{{ end }}.{{ $dnsSuffix }}
         {{- end }}
       secretName: {{ .secretName }}{{ if $isFeatureDeployment }}-pr-{{ $.Values.featureDeployment.prNumber }}{{ end }}
     {{- end }}
   {{- end }}
   rules:
     {{- range .hosts }}
-    - host: {{ .host }}{{ if $isFeatureDeployment }}-pr-{{ $.Values.featureDeployment.prNumber }}{{ end }}{{ if $.Values.ingress.tenantName }}.{{ $.Values.ingress.tenantName }}{{ end }}.{{ $dnsSuffix }}
+    - host: {{ if $isFeatureDeployment }}pr-{{ $.Values.featureDeployment.prNumber }}.{{ end }}{{ .host }}{{ if $.Values.ingress.tenantName }}.{{ $.Values.ingress.tenantName }}{{ end }}.{{ $dnsSuffix }}
       http:
         paths:
           {{- range .paths }}
